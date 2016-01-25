@@ -14,6 +14,7 @@ public class MazeGenerator : MonoBehaviour {
     public bool useRandomSeed;
     public bool breakMoreWalls;
     public GameObject wall;
+	public GameObject darkWall;
     public float wallLength;
     [HideInInspector]
     public int xSize;// x size of the maze
@@ -37,6 +38,7 @@ public class MazeGenerator : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
+		Debug.Log (xSize + "," + ySize);
         if (PlayerPrefs.GetInt("xSize") == 0)
         {
             PlayerPrefs.SetInt("xSize", (int)((Screen.width / Screen.height) * 10) + 1);
@@ -44,6 +46,11 @@ public class MazeGenerator : MonoBehaviour {
         }
         xSize = PlayerPrefs.GetInt("xSize");
         ySize = PlayerPrefs.GetInt("ySize");
+		if (PlayerPrefs.GetInt ("Level") <= 1)
+			breakMoreWalls = false;
+		else if(PlayerPrefs.GetInt ("Level")  >= 9){
+			wall = darkWall;
+		}
         CreateWalls();
         Instantiate(target, (cells[totalCells - 1].north.transform.position + cells[totalCells - 1].south.transform.position) / 2, Quaternion.identity);
     }

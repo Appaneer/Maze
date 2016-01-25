@@ -18,8 +18,6 @@ public class LevelManager : MonoBehaviour {
 	public float fadeSpeed; // how quickly the screen fades in and out
 	private bool isStarting = true;
 	[HideInInspector]
-	public int level;
-	[HideInInspector]
 	public bool isFinishingLevel = false;
 	[HideInInspector]
 	public bool isChased = false;
@@ -29,13 +27,11 @@ public class LevelManager : MonoBehaviour {
 	{
 		fader.pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
 		faderColor = fader.color;
-		level = ((mg.ySize - 10) / 2);
 		TBD ();
 	}
 
 	void TBD(){
-		Node startPos1;
-		switch (level) {
+		switch (PlayerPrefs.GetInt("Level")) {
 		case 0:
 		case 1:
 			break;
@@ -43,7 +39,7 @@ public class LevelManager : MonoBehaviour {
 		case 3:
 		case 4:
 		case 5:
-			startPos1 = mg.cells [GenerateChaserPos (true)];
+			Node startPos1 = mg.cells [GenerateChaserPos (true)];
 			Instantiate (chaser, new Vector2 (startPos1.x, startPos1.y), Quaternion.identity);
 			break;
 		case 6:
@@ -53,6 +49,30 @@ public class LevelManager : MonoBehaviour {
 			Instantiate (chaser, new Vector2 (startPos1.x, startPos1.y), Quaternion.identity);
 			Node startPos2 = mg.cells[GenerateChaserPos (false)];
 			Instantiate (chaser, new Vector2(startPos2.x, startPos2.y), Quaternion.identity);
+			break;
+		case 9:
+		case 10:
+			Camera.main.backgroundColor = Color.black;
+			GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<Light> ().enabled = true;
+			break;
+		case 11:
+		case 12:
+			Camera.main.backgroundColor = Color.black;
+			GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<Light> ().enabled = true;
+			startPos1 = mg.cells [GenerateChaserPos (true)];
+			GameObject tempChaser = Instantiate (chaser, new Vector2 (startPos1.x, startPos1.y), Quaternion.identity) as GameObject;
+			tempChaser.GetComponentInChildren<Light> ().enabled = true;
+			break;
+		case 13:
+		case 14:
+			Camera.main.backgroundColor = Color.black;
+			GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<Light> ().enabled = true;
+			startPos1 = mg.cells [GenerateChaserPos (true)];
+			tempChaser = Instantiate (chaser, new Vector2 (startPos1.x, startPos1.y), Quaternion.identity) as GameObject;
+			tempChaser.GetComponentInChildren<Light> ().enabled = true;
+			startPos2 = mg.cells [GenerateChaserPos (false)];
+			GameObject tempChaser2 = Instantiate (chaser, new Vector2 (startPos2.x, startPos2.y), Quaternion.identity) as GameObject;
+			tempChaser2.GetComponentInChildren<Light> ().enabled = true;
 			break;
 		}
 	}
@@ -103,9 +123,16 @@ public class LevelManager : MonoBehaviour {
 
 		// If the screen is almost black...
 		if (fader.color.a >= 0.8f) {
-			PlayerPrefs.SetInt("xSize", PlayerPrefs.GetInt("xSize") + 2 * (Screen.width / Screen.height));
-			PlayerPrefs.SetInt("ySize", PlayerPrefs.GetInt("ySize") + 2);
+			if (PlayerPrefs.GetInt ("Level") == 8) {
+				PlayerPrefs.SetInt("xSize", (int)(((double)Screen.width / Screen.height) * 10) - 2);//
+				PlayerPrefs.SetInt("ySize", 10);
+			} 
+			else {
+				PlayerPrefs.SetInt("xSize", PlayerPrefs.GetInt("xSize") + 2 * (Screen.width / Screen.height));
+				PlayerPrefs.SetInt("ySize", PlayerPrefs.GetInt("ySize") + 2);
+			}
 			SceneManager.LoadScene("Maze");
+			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt("Level") + 1);
 		}
 	}
 
@@ -126,6 +153,7 @@ public class LevelManager : MonoBehaviour {
 
 	public void Reset()
 	{
+		PlayerPrefs.SetInt ("Level", 0);
 		PlayerPrefs.SetInt("xSize", (int)(((double)Screen.width / Screen.height) * 10) - 2);//
 		PlayerPrefs.SetInt("ySize", 10);
 	}
