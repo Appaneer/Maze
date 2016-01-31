@@ -16,6 +16,7 @@ public class ChaserManager : MonoBehaviour {
 	[Range(0.1f, 0.01f)]
 	public float speed;
 	private int currentNode;
+	public  bool isPaused = false;
 
 	// Use this for initialization
 	void Start()
@@ -29,7 +30,9 @@ public class ChaserManager : MonoBehaviour {
 	}
 
 	void Update() {
-		if (path != null) {
+		if (isPaused) {
+		}
+		else if (path != null && !isPaused) {
 			int currCell = 0;
 			while (currCell < path.Count - 1) {// this while loop draw the path on console(scene view). Doesnt affect game view because it's debug
 				Vector2 start = new Vector2 (path [currCell].x, path [currCell].y);
@@ -43,7 +46,7 @@ public class ChaserManager : MonoBehaviour {
 			if (Vector2.Distance (transform.position, tempNode) <= 0.05f) {
 				currentNode++;//if the distance between current node and chaser's position is less than 0.05 then move on to the next node
 			}
-		}
+		} 
 
 		path = mg.Astar(getNodePosition(transform.position), getNodePosition(player.transform.position));
 	}

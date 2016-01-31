@@ -9,7 +9,6 @@ public class CameraAdjustment : MonoBehaviour {
 	*/
 
     public MazeGenerator mg;
-    public Text txt;
 	// Use this for initialization
 	void Awake () {
         Camera cam = Camera.main;//find the main camer
@@ -25,8 +24,5 @@ public class CameraAdjustment : MonoBehaviour {
             cam.orthographicSize = 40 / 2 - 7f;
         }
 	}
-
-    void Start() {
-        txt.text = "Level: "+((mg.ySize - 10) / 2);
-    }
+		
 }

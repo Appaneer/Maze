@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
 
@@ -22,6 +23,7 @@ public class LevelManager : MonoBehaviour {
 	[HideInInspector]
 	public bool isChased = false;
 	private Color faderColor;
+	public Text levelText;
 
 	void Start()
 	{
@@ -57,14 +59,16 @@ public class LevelManager : MonoBehaviour {
 			break;
 		case 11:
 		case 12:
+		case 13:
 			Camera.main.backgroundColor = Color.black;
 			GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<Light> ().enabled = true;
 			startPos1 = mg.cells [mg.xSize - 1];//bottom right corner
 			GameObject tempChaser = Instantiate (chaser, new Vector2 (startPos1.x, startPos1.y), Quaternion.identity) as GameObject;
 			tempChaser.GetComponentInChildren<Light> ().enabled = true;
 			break;
-		case 13:
 		case 14:
+		case 15:
+		case 16:
 			Camera.main.backgroundColor = Color.black;
 			GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<Light> ().enabled = true;
 			startPos1 = mg.cells [mg.xSize - 1];//bottom right corner
@@ -79,8 +83,9 @@ public class LevelManager : MonoBehaviour {
 
 	void Update()
 	{
-		if (isStarting)
+		if (isStarting) {
 			StartScene();
+		}
 
 		if (isFinishingLevel)
 			NextLevel ();
@@ -92,6 +97,10 @@ public class LevelManager : MonoBehaviour {
 	void FadeToClear()
 	{
 		fader.color = Color.Lerp(fader.color, Color.clear, fadeSpeed * Time.deltaTime);
+		levelText.color = Color.Lerp(levelText.color, Color.clear,  0.5f * Time.deltaTime);
+		levelText.color = Color.Lerp(levelText.color, Color.clear,  0.5f * Time.deltaTime);
+		levelText.color = Color.Lerp(levelText.color, Color.clear,  0.5f * Time.deltaTime);
+		levelText.color = Color.Lerp(levelText.color, Color.clear,   Time.deltaTime);
 	}
 
 
@@ -132,6 +141,7 @@ public class LevelManager : MonoBehaviour {
 				PlayerPrefs.SetInt("ySize", PlayerPrefs.GetInt("ySize") + 2);
 			}
 			SceneManager.LoadScene("Maze");
+			PlayerPrefs.SetInt ("Coins", PlayerPrefs.GetInt("Coins") + PlayerPrefs.GetInt("Level"));//order matters!!
 			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt("Level") + 1);
 		}
 	}

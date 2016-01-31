@@ -9,6 +9,6 @@ public class CoinTriggerManager : MonoBehaviour {
 			PlayerPrefs.SetInt ("Coins", PlayerPrefs.GetInt("Coins") + 1);
 			Destroy (gameObject);
 		}
-			
+		GameObject.Find ("Scripts").GetComponent<UIManager>().updateCoin();
 	}
 }
