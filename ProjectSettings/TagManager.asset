@@ -8,6 +8,7 @@ TagManager:
   - Target
   - Scripts
   - Coin
+  - Chaser
   layers:
   - Default
   - TransparentFX
