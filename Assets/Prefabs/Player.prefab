@@ -9,9 +9,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 404086}
   - 212: {fileID: 21214044}
-  - 58: {fileID: 5842656}
   - 50: {fileID: 5037314}
   - 114: {fileID: 11408644}
+  - 58: {fileID: 5845514}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -43,7 +43,7 @@ Transform:
   m_GameObject: {fileID: 175952}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.34, y: 0.34, z: 1}
+  m_LocalScale: {x: 0.17, y: 0.17, z: 1}
   m_Children:
   - {fileID: 408146}
   m_Father: {fileID: 0}
@@ -77,7 +77,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &5842656
+--- !u!58 &5845514
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -85,12 +85,12 @@ CircleCollider2D:
   m_GameObject: {fileID: 175952}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: f45f7a5dee5ebf84684aa501397cb70e, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.22
+  m_Radius: 2.49
 --- !u!108 &10832306
 Light:
   m_ObjectHideFlags: 1
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f0cef1771a41a2848a701b2ec0f3b166, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4ca48c6495ae22e41b6470ae9adfcd10, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -190,6 +190,11 @@ Prefab:
       propertyPath: m_RenderMode
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4ca48c6495ae22e41b6470ae9adfcd10,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 175952}

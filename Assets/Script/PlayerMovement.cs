@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
 #endif
 
 #if UNITY_ANDROID
-        if (Input.touchCount > 0)
+        if (Input.touchCount == 1)
         {
 
             foreach (Touch touch in Input.touches)

@@ -9,14 +9,12 @@ public class UIManager : MonoBehaviour {
 	public Text coinText;
 	public Text levelText;
 	public Canvas shopCanvas;
+	public RectTransform settingPanel;
+	public Animator anim;
 
 	void Start(){
 		updateCoin ();
 		levelText.text = "Level " + PlayerPrefs.GetInt ("Level");
-	}
-
-	void Update(){
-		
 	}
 
 	public void startGame(){
@@ -29,15 +27,22 @@ public class UIManager : MonoBehaviour {
 
 	public void pause(){
 		GameObject[] cm = GameObject.FindGameObjectsWithTag ("Chaser");
-		bool temp = cm[0].GetComponent<ChaserManager> ().isPaused;
+		bool temp;
+
+		if(PlayerPrefs.GetInt("Level") < 2)//there is no chasers at level 0 and 1
+			temp = false;
+		else
+			temp = cm[0].GetComponent<ChaserManager> ().isPaused;
+		
 		foreach(GameObject c in cm){
 			c.GetComponent<ChaserManager> ().isPaused = !temp;
 		}
 		Time.timeScale = (Time.timeScale != 0) ? 0 : 1;
 	}
 
-	public void openShop(){
-
+	public void clickedSetting(){
+		settingPanel.gameObject.SetActive (true);
+		anim.SetTrigger ("Clicked");
 	}
 
 	public void updateCoin(){
