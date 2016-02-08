@@ -11,8 +11,10 @@ public class UIManager : MonoBehaviour {
 	public Canvas shopCanvas;
 	public RectTransform settingPanel;
 	public Animator anim;
+	static UIManager instance;
 
 	void Start(){
+		instance = this;
 		updateCoin ();
 		levelText.text = "Level " + PlayerPrefs.GetInt ("Level");
 	}
@@ -45,7 +47,7 @@ public class UIManager : MonoBehaviour {
 		anim.SetTrigger ("Clicked");
 	}
 
-	public void updateCoin(){
-		coinText.text = "$" + PlayerPrefs.GetInt ("Coins");
+	public static void updateCoin(){
+		instance.coinText.text = "$" + PlayerPrefs.GetInt ("Coins");
 	}
 }

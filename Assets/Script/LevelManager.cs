@@ -18,9 +18,7 @@ public class LevelManager : MonoBehaviour {
 	[Range(0,3)]
 	public float fadeSpeed; // how quickly the screen fades in and out
 	private bool isStarting = true;
-	[HideInInspector]
 	public bool isFinishingLevel = false;
-	[HideInInspector]
 	public bool isChased = false;
 	private Color faderColor;
 	public Text levelText;
@@ -83,10 +81,9 @@ public class LevelManager : MonoBehaviour {
 
 	void Update()
 	{
-		if (isStarting) {
+		if (isStarting) 
 			StartScene();
-		}
-
+		
 		if (isFinishingLevel)
 			NextLevel ();
 		else if (isChased)
@@ -141,7 +138,7 @@ public class LevelManager : MonoBehaviour {
 				PlayerPrefs.SetInt("ySize", PlayerPrefs.GetInt("ySize") + 2);
 			}
 			SceneManager.LoadScene("Maze");
-			PlayerPrefs.SetInt ("Coins", PlayerPrefs.GetInt("Coins") + PlayerPrefs.GetInt("Level"));//order matters!!
+			PlayerPrefs.SetInt ("Coins", ((PlayerPrefs.GetInt("Level") <= 8) ? PlayerPrefs.GetInt("Level") : (PlayerPrefs.GetInt("Level") % 8)) + PlayerPrefs.GetInt("Coins"));
 			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt("Level") + 1);
 		}
 	}
@@ -155,8 +152,8 @@ public class LevelManager : MonoBehaviour {
 			PlayerPrefs.SetInt("xSize", PlayerPrefs.GetInt("xSize") + 2 * (Screen.width / Screen.height));
 			PlayerPrefs.SetInt("ySize", PlayerPrefs.GetInt("ySize") + 2);
 		}
-		SceneManager.LoadScene("Maze");
 		PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt("Level") + 1);
+		SceneManager.LoadScene("Maze");
 	}
 
 	void RestartLevel()
@@ -177,9 +174,10 @@ public class LevelManager : MonoBehaviour {
 	public void Reset()
 	{
 		PlayerPrefs.SetInt ("Level", 0);
-		PlayerPrefs.SetInt("xSize", (int)(((double)Screen.width / Screen.height) * 10) - 2);//
+		PlayerPrefs.SetInt("xSize", (int)(((double)Screen.width / Screen.height) * 10) - 2 );
 		PlayerPrefs.SetInt("ySize", 10);
 	}
+
 
 	public void Restart(){
 		SceneManager.LoadScene("Maze");
