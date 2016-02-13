@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour {
 	public Text coinText;
 	public Text levelText;
 	public Canvas shopCanvas;
+	public Canvas shopConfirmPage;
 	public RectTransform settingPanel;
 	public Animator anim;
 	static UIManager instance;
@@ -47,7 +48,66 @@ public class UIManager : MonoBehaviour {
 		anim.SetTrigger ("Clicked");
 	}
 
+	public void openShop(){
+		shopCanvas.enabled = !shopCanvas.enabled;
+		//pause ();
+	}
+
+	public void toggleShopConfirmPage(Image flag){
+		shopConfirmPage.enabled = !shopConfirmPage.enabled;
+		GameObject.FindGameObjectWithTag ("Player").GetComponent<SpriteRenderer> ().sprite = flag.sprite;
+	}
+
+	public void buy(){
+		
+	}
+
 	public static void updateCoin(){
 		instance.coinText.text = "$" + PlayerPrefs.GetInt ("Coins");
 	}
+
 }
+
+
+/* I used this method to auto assign country flag to each button. It works perfectly
+	 * Now we don't need this. Just to keep a copy in case we want to go back
+	 * private void DoStuff(){
+		Array.Sort (countryFlags,
+			delegate(Sprite i1, Sprite i2) 
+			{ 
+				return i1.name.CompareTo(i2.name); 
+			}
+		);
+
+		try
+		{
+			string line;
+			StreamReader input = new StreamReader("Assets/names.txt", Encoding.Default);
+			using (input)
+			{
+				do
+				{
+					line = input.ReadLine();
+					if (line != null)
+					{
+						string[] list = line.Split(',');
+
+						for(int i = 0; i < list.Length-1; i++){
+							string countryName = list[i];
+							buttonList[i].name = countryName;
+							buttonList[i].image.sprite = countryFlags[i];
+						}
+
+					}
+				}
+				while (line != null);    
+				input.Close();
+			}
+		}
+		catch (FileNotFoundException e)
+		{
+			Debug.LogError ("FUCCCCCKKKKK");
+		}
+	}
+	 * 
+	*/
