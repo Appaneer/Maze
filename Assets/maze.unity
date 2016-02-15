@@ -5690,6 +5690,7 @@ MonoBehaviour:
   shopConfirmPage: {fileID: 380985959}
   settingPanel: {fileID: 1171259798}
   anim: {fileID: 1171259799}
+  playerPrefab: {fileID: 175952, guid: eb42a65d38b742942880226e7c73e3d1, type: 2}
 --- !u!1 &502309671
 GameObject:
   m_ObjectHideFlags: 0
@@ -11382,7 +11383,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.5, y: -3015}
+  m_AnchoredPosition: {x: -1.5, y: -3265}
   m_SizeDelta: {x: 180, y: 6530}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1030306241
@@ -20149,7 +20150,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.5, y: -3015}
+  m_AnchoredPosition: {x: 8.5, y: -3265}
   m_SizeDelta: {x: 180, y: 6530}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1708423909
@@ -23525,7 +23526,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.5, y: -3015}
+  m_AnchoredPosition: {x: 8.5, y: -3265}
   m_SizeDelta: {x: 180, y: 6530}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2007444058

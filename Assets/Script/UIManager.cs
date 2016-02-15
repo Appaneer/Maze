@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor;
 using UnityEngine.Advertisements;
 
 public class UIManager : MonoBehaviour {
@@ -14,6 +13,7 @@ public class UIManager : MonoBehaviour {
 	public Canvas shopConfirmPage;
 	public RectTransform settingPanel;
 	public Animator anim;
+	public GameObject playerPrefab;
 	private Sprite selectedSkin;
 	static UIManager instance;
 
@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour {
 			temp = false;
 		else
 			temp = cm[0].GetComponent<ChaserManager> ().isPaused;
-		
+
 		foreach(GameObject c in cm){
 			c.GetComponent<ChaserManager> ().isPaused = !temp;
 		}
@@ -67,8 +67,7 @@ public class UIManager : MonoBehaviour {
 			return;
 		}
 		GameObject.FindGameObjectWithTag ("Player").GetComponent<SpriteRenderer> ().sprite = selectedSkin;//update local(gameobject) skin
-		GameObject player = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player.prefab");//get prefab
-		player.GetComponent<SpriteRenderer> ().sprite = selectedSkin;//update prefab skin
+		playerPrefab.GetComponent<SpriteRenderer> ().sprite = selectedSkin;//update prefab skin
 		PlayerPrefs.SetInt ("Coins", PlayerPrefs.GetInt ("Coins") - price);//reduce money
 		updateCoin();
 	}
@@ -104,44 +103,45 @@ public class UIManager : MonoBehaviour {
 
 
 /* I used this method to auto assign country flag to each button. It works perfectly
-	 * Now we don't need this. Just to keep a copy in case we want to go back
-	 * private void DoStuff(){
-		Array.Sort (countryFlags,
-			delegate(Sprite i1, Sprite i2) 
-			{ 
-				return i1.name.CompareTo(i2.name); 
-			}
-		);
-
-		try
-		{
-			string line;
-			StreamReader input = new StreamReader("Assets/names.txt", Encoding.Default);
-			using (input)
-			{
-				do
-				{
-					line = input.ReadLine();
-					if (line != null)
-					{
-						string[] list = line.Split(',');
-
-						for(int i = 0; i < list.Length-1; i++){
-							string countryName = list[i];
-							buttonList[i].name = countryName;
-							buttonList[i].image.sprite = countryFlags[i];
-						}
-
-					}
-				}
-				while (line != null);    
-				input.Close();
-			}
+ * Now we don't need this. Just to keep a copy in case we want to go back
+ * private void DoStuff(){
+	Array.Sort (countryFlags,
+		delegate(Sprite i1, Sprite i2) 
+		{ 
+			return i1.name.CompareTo(i2.name); 
 		}
-		catch (FileNotFoundException e)
+	);
+
+	try
+	{
+		string line;
+		StreamReader input = new StreamReader("Assets/names.txt", Encoding.Default);
+		using (input)
 		{
-			Debug.LogError ("FUCCCCCKKKKK");
+			do
+			{
+				line = input.ReadLine();
+				if (line != null)
+				{
+					string[] list = line.Split(',');
+
+					for(int i = 0; i < list.Length-1; i++){
+						string countryName = list[i];
+						buttonList[i].name = countryName;
+						buttonList[i].image.sprite = countryFlags[i];
+					}
+
+				}
+			}
+			while (line != null);    
+			input.Close();
 		}
 	}
-	 * 
-	*/
+	catch (FileNotFoundException e)
+	{
+		Debug.LogError ("FUCCCCCKKKKK");
+	}
+}
+ * 
+*/
+
