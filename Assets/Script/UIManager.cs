@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor;
+using UnityEngine.Advertisements;
 
 public class UIManager : MonoBehaviour {
 
@@ -12,6 +14,7 @@ public class UIManager : MonoBehaviour {
 	public Canvas shopConfirmPage;
 	public RectTransform settingPanel;
 	public Animator anim;
+	private Sprite selectedSkin;
 	static UIManager instance;
 
 	void Start(){
@@ -55,15 +58,46 @@ public class UIManager : MonoBehaviour {
 
 	public void toggleShopConfirmPage(Image flag){
 		shopConfirmPage.enabled = !shopConfirmPage.enabled;
-		GameObject.FindGameObjectWithTag ("Player").GetComponent<SpriteRenderer> ().sprite = flag.sprite;
+		selectedSkin = (flag == null) ? null : flag.sprite;
 	}
 
-	public void buy(){
-		
+	public void buy(int price){
+		if (PlayerPrefs.GetInt ("Coins") < price) {//if the player has enough money to buy this 
+			toggleShopConfirmPage (null);//close confirm page
+			return;
+		}
+		GameObject.FindGameObjectWithTag ("Player").GetComponent<SpriteRenderer> ().sprite = selectedSkin;//update local(gameobject) skin
+		GameObject player = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player.prefab");//get prefab
+		player.GetComponent<SpriteRenderer> ().sprite = selectedSkin;//update prefab skin
+		PlayerPrefs.SetInt ("Coins", PlayerPrefs.GetInt ("Coins") - price);//reduce money
+		updateCoin();
 	}
 
 	public static void updateCoin(){
 		instance.coinText.text = "$" + PlayerPrefs.GetInt ("Coins");
+	}
+
+	public void ShowRewardedAd(){
+		if(Advertisement.IsReady("rewardedVideoZone") && Time.timeScale == 0){
+			var options = new ShowOptions{ resultCallback = HandleShowResult };
+			Advertisement.Show ("rewardedVideoZone", options);
+		}
+	}
+
+	private void HandleShowResult(ShowResult result){
+		switch (result) {
+		case ShowResult.Finished:
+			Debug.Log ("Successfully shown");
+			PlayerPrefs.SetInt ("Coins", PlayerPrefs.GetInt ("Coins") + 10);
+			updateCoin ();
+			break;
+		case ShowResult.Skipped:
+			Debug.Log ("Ad skipped");
+			break;
+		case ShowResult.Failed:
+			Debug.Log ("Ad failed to be shown");
+			break;
+		}
 	}
 
 }
