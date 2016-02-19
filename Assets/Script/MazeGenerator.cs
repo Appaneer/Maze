@@ -48,7 +48,7 @@ public class MazeGenerator : MonoBehaviour {
         ySize = PlayerPrefs.GetInt("ySize");
 		if (PlayerPrefs.GetInt ("Level") <= 1)
 			breakMoreWalls = false;
-		else if(PlayerPrefs.GetInt ("Level")  >= 9){
+		else if(PlayerPrefs.GetInt ("Level") > LevelManager.levelChange){
 			wall = darkWall;
 		}
         CreateWalls();

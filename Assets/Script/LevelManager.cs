@@ -12,6 +12,8 @@ public class LevelManager : MonoBehaviour {
 		When a chaser reaches the player,  the boolean isChased is called(TBD from which script)
 		float fadeSpeed can be edited via inspector 
 	*/
+
+	public static int levelChange = 7;
 	public MazeGenerator mg;
 	public GameObject chaser;
 	public GUITexture fader;
@@ -38,37 +40,36 @@ public class LevelManager : MonoBehaviour {
 		case 2:
 		case 3:
 		case 4:
-		case 5:
 			Node startPos1 = mg.cells [mg.xSize - 1];//bottom right corner
 			Instantiate (chaser, new Vector2 (startPos1.x, startPos1.y), Quaternion.identity);
 			break;
+		case 5:
 		case 6:
 		case 7:
-		case 8:
 			startPos1 = mg.cells [mg.xSize - 1];//bottom right corner
 			Instantiate (chaser, new Vector2 (startPos1.x, startPos1.y), Quaternion.identity);
 			Node startPos2 = mg.cells[mg.totalCells - mg.xSize];//top left corner
 			Instantiate (chaser, new Vector2(startPos2.x, startPos2.y), Quaternion.identity);
 			break;
+		case 8:
 		case 9:
-		case 10:
 			Camera.main.backgroundColor = Color.black;
-			GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<Light> ().enabled = true;
+			PlayerMovement.player.GetComponentInChildren<Light> ().enabled = true;
 			break;
+		case 10:
 		case 11:
 		case 12:
-		case 13:
 			Camera.main.backgroundColor = Color.black;
-			GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<Light> ().enabled = true;
+			PlayerMovement.player.GetComponentInChildren<Light> ().enabled = true;
 			startPos1 = mg.cells [mg.xSize - 1];//bottom right corner
 			GameObject tempChaser = Instantiate (chaser, new Vector2 (startPos1.x, startPos1.y), Quaternion.identity) as GameObject;
 			tempChaser.GetComponentInChildren<Light> ().enabled = true;
 			break;
+		case 13:
 		case 14:
 		case 15:
-		case 16:
 			Camera.main.backgroundColor = Color.black;
-			GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<Light> ().enabled = true;
+			PlayerMovement.player.GetComponentInChildren<Light> ().enabled = true;
 			startPos1 = mg.cells [mg.xSize - 1];//bottom right corner
 			tempChaser = Instantiate (chaser, new Vector2 (startPos1.x, startPos1.y), Quaternion.identity) as GameObject;
 			tempChaser.GetComponentInChildren<Light> ().enabled = true;
@@ -129,7 +130,7 @@ public class LevelManager : MonoBehaviour {
 
 		// If the screen is almost black...
 		if (fader.color.a >= 0.8f) {
-			if (PlayerPrefs.GetInt ("Level") == 8) {
+			if (PlayerPrefs.GetInt ("Level") == levelChange) {
 				PlayerPrefs.SetInt("xSize", (int)(((double)Screen.width / Screen.height) * 10) - 2);//
 				PlayerPrefs.SetInt("ySize", 10);
 			} 
@@ -138,13 +139,13 @@ public class LevelManager : MonoBehaviour {
 				PlayerPrefs.SetInt("ySize", PlayerPrefs.GetInt("ySize") + 2);
 			}
 			SceneManager.LoadScene("Maze");
-			PlayerPrefs.SetInt ("Coins", ((PlayerPrefs.GetInt("Level") <= 8) ? PlayerPrefs.GetInt("Level") : (PlayerPrefs.GetInt("Level") % 8)) + PlayerPrefs.GetInt("Coins"));
+			PlayerPrefs.SetInt ("Coins", ((PlayerPrefs.GetInt("Level") <= levelChange) ? PlayerPrefs.GetInt("Level") : (PlayerPrefs.GetInt("Level") % levelChange)) + PlayerPrefs.GetInt("Coins"));
 			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt("Level") + 1);
 		}
 	}
 
 	public void Next(){
-		if (PlayerPrefs.GetInt ("Level") == 8) {
+		if (PlayerPrefs.GetInt ("Level") == levelChange) {
 			PlayerPrefs.SetInt("xSize", (int)(((double)Screen.width / Screen.height) * 10) - 2);//
 			PlayerPrefs.SetInt("ySize", 10);
 		} 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Advertisements;
@@ -13,14 +14,17 @@ public class UIManager : MonoBehaviour {
 	public Canvas shopConfirmPage;
 	public RectTransform settingPanel;
 	public Animator anim;
-	public GameObject playerPrefab;
 	private Sprite selectedSkin;
+	public List<Texture2D> list;
 	static UIManager instance;
 
 	void Start(){
 		instance = this;
 		updateCoin ();
-		levelText.text = "Level " + PlayerPrefs.GetInt ("Level");
+		int temp = PlayerPrefs.GetInt ("Level") % LevelManager.levelChange;
+		levelText.text = "Level " + ((temp == 0 && PlayerPrefs.GetInt ("Level") > 0) ? 7 : temp);
+		Texture2D skin = list.Find (item => item.GetInstanceID() == PlayerPrefs.GetInt("SkinID")-2);
+		PlayerMovement.player.GetComponent<SpriteRenderer> ().sprite = Sprite.Create(skin, new Rect(0,0,skin.width, skin.height), new Vector2(0.5f,0.5f));
 	}
 
 	public void startGame(){
@@ -66,10 +70,11 @@ public class UIManager : MonoBehaviour {
 			toggleShopConfirmPage (null);//close confirm page
 			return;
 		}
-		GameObject.FindGameObjectWithTag ("Player").GetComponent<SpriteRenderer> ().sprite = selectedSkin;//update local(gameobject) skin
-		playerPrefab.GetComponent<SpriteRenderer> ().sprite = selectedSkin;//update prefab skin
+		PlayerMovement.player.GetComponent<SpriteRenderer> ().sprite = selectedSkin;//update local(gameobject) skin
 		PlayerPrefs.SetInt ("Coins", PlayerPrefs.GetInt ("Coins") - price);//reduce money
+		PlayerPrefs.SetInt ("SkinID", selectedSkin.GetInstanceID());//reduce money
 		updateCoin();
+		toggleShopConfirmPage (null);//close confirm page
 	}
 
 	public static void updateCoin(){

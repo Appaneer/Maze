@@ -11,7 +11,7 @@ public class CoinManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		for(int i = 0;i < PlayerPrefs.GetInt("Level") % 8 / 2; i++){
+		for(int i = 0;i < PlayerPrefs.GetInt("Level") % LevelManager.levelChange / 2; i++){
 			int temp = (mg.ySize/2 - 3) * mg.xSize;
 			int temp2 = (mg.ySize/2 + 3) * mg.xSize;
 			int temp3 = Random.Range (temp, temp2);

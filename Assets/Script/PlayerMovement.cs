@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 	/*
 		This script manages player movement and it attaches to the player
 	*/
+	public static GameObject player;
 
     public float speed;
     private float h = 0;
@@ -19,9 +20,13 @@ public class PlayerMovement : MonoBehaviour
     private float minSwipeDist = 50.0f;
     private float maxSwipeTime = 0.5f;
 
+	void Awake(){
+		player = gameObject;
+	}
+
     void Start()
     {
-        rb2d = gameObject.GetComponent<Rigidbody2D>();
+		rb2d = gameObject.GetComponent<Rigidbody2D>();
         gameObject.transform.position = (mg.cells[0].north.transform.position + mg.cells[0].south.transform.position) / 2;
     }
 
